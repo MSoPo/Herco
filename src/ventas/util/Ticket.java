@@ -15,11 +15,13 @@ import modelo.hibernate.beans.Venta;
 public class Ticket
 {
 	
-	private String	contentTicket	= "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n=============================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{ventaanterior}}RECIBIDO: {{recibo}}\n{{lnlcambio}}: {{change}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+	private String	contentTicket	= "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{ventaanterior}}RECIBIDO: {{recibo}}\n{{lnlcambio}}: {{change}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+	//private String	contentTicket	= "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n=============================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{ventaanterior}}RECIBIDO: {{recibo}}\n{{lnlcambio}}: {{change}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
 	
 	public Ticket(Venta venta)
 	{
-		this.contentTicket = "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n=============================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+		this.contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+		//this.contentTicket = "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n=============================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n=============================\n{{items}}\n=============================\nTOTAL: {{total}}\n\n{{Cliente}}=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		this.contentTicket = this.contentTicket.replace("{{ticket}}", venta.getFiidventa() + "");
@@ -32,14 +34,14 @@ public class Ticket
 		{
 			String nombre = detVe.getProducto().getFcnomproducto();
 			String nombreF = "";
-			for (int i = 0; i < nombre.length(); i += Constantes.Ticket80)
+			for (int i = 0; i < nombre.length(); i += Constantes.Ticket56)
 			{
-				if (i + Constantes.Ticket80 < nombre.length())
+				if (i + Constantes.Ticket56 < nombre.length())
 				{
-					nombreF = nombreF + nombre.substring(i, i + Constantes.Ticket80) + "\n";
+					nombreF = nombreF + nombre.substring(i, i + Constantes.Ticket56) + "\n";
 				} else
 				{
-					nombreF = nombreF + agregarEspacion(nombre.substring(i), Constantes.Ticket80, false);
+					nombreF = nombreF + agregarEspacion(nombre.substring(i), Constantes.Ticket56, false);
 				}
 			}
 			itmes = itmes

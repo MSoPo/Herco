@@ -188,6 +188,32 @@ public class AjaxController
 	}
 	
 	@RequestMapping(value =
+		{ "/imprimirticketIVA" }, method =
+		{ org.springframework.web.bind.annotation.RequestMethod.POST, org.springframework.web.bind.annotation.RequestMethod.GET })
+		@ResponseBody
+		public JsonResponse imprimirticketIVA(@ModelAttribute("codigo") String id, BindingResult result) throws NumberFormatException, BussinessException,
+				PrintException, FileNotFoundException
+		{
+			Venta venta = (Venta) this.ventadao.obtenPorId(new Long(id));
+			List<DetalleVenta> lstProd = this.ventadao.obtenerDetalleVenta(new Long(id).longValue());
+			venta.setDetalleVenta(lstProd);
+			
+			Impresion.impresionTicketIVA(venta);
+			
+			/*Ticket ticket = new Ticket(venta);
+			ticket.print();*/
+			JsonResponse res = new JsonResponse();
+			if (!result.hasErrors())
+			{
+				res.setStatus("SUCCESS");
+			} else
+			{
+				res.setStatus("FAIL");
+			}
+			return res;
+		}
+	
+	@RequestMapping(value =
 	{ "/buscarCompras" }, method =
 	{ org.springframework.web.bind.annotation.RequestMethod.POST, org.springframework.web.bind.annotation.RequestMethod.GET })
 	@ResponseBody

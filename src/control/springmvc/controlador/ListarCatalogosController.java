@@ -359,6 +359,49 @@ public class ListarCatalogosController
     return new ModelAndView("listarVentas", "model", myModel);
   }
   
+  @RequestMapping({"/listarPagosFecha.htm"})
+  public ModelAndView listarPagosFecha(HttpServletRequest request, HttpServletResponse response)
+		    throws ServletException, IOException, BussinessException, ParseException
+		  {
+		    String fechainicio = request.getParameter("fechai");
+		    String fechafin = request.getParameter("fechaf");
+		    String noventa = request.getParameter("noventa");
+		    Calendar cal = Calendar.getInstance();
+		    Date fechaf = cal.getTime();
+		    cal.add(5, -1);
+		    Date fechai = cal.getTime();
+		    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		    long nventa = 0L;
+		    if (fechainicio != null)
+		    {
+		      fechai = format.parse(fechainicio);
+		      fechaf = format.parse(fechafin);
+		      
+		      try
+		      {
+		        nventa = new Long(noventa).longValue();
+		      }
+		      catch (Exception localException) {}
+		      
+		    }
+		    request.setAttribute("fechaf", format.format(fechaf));
+		    request.setAttribute("fechai", format.format(fechai));
+		    request.setAttribute("noventa", Long.valueOf(nventa));
+		    
+		    
+		    List<Pago> lstPagos = null;
+		    
+		    if (nventa > 0L)
+		    	lstPagos = this.pagodao.obtenerPagosVenta(nventa);
+		    else
+		       lstPagos = this.pagodao.obtenerPagosFechas(fechai, fechaf);
+		    
+		    
+		    Map<String, Object> myModel = new HashMap();
+		    myModel.put("lstPagos", lstPagos);
+		    return new ModelAndView("listarPagosFecha", "model", myModel);
+		  }
+  
   @RequestMapping({"/listarCompras.htm"})
   public ModelAndView listarCompras(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException, BussinessException, ParseException

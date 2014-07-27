@@ -15,12 +15,9 @@ import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.print.ServiceUI;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
-
-import org.quartz.Job;
 
 import modelo.hibernate.beans.DetalleVenta;
 import modelo.hibernate.beans.Venta;
@@ -61,6 +58,70 @@ public class Impresion
 		String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
 				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "=============================\n{{items}}\n"
+				//+ "=============================\nSUBTOTAL: {{subtotal}}\n"
+				//+ "\nIVA: {{iva}}\n"
+				+ "\nTOTAL: {{total}}\n\n"
+				+ "{{Cliente}}=============================\n"
+				+ "GRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+		/*String contentTicket = "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n"
+				+ "========================================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
+				+ "========================================\n{{items}}\n"
+				+ "========================================\nTOTAL: $ {{total}}\n\n{{Cliente}}"
+				+ "========================================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";*/
+		
+		
+		contentTicket = contentTicket.replace("{{ticket}}", venta.getFiidventa() + "");
+		contentTicket = contentTicket.replace("{{cajero}}", venta.getUsuario().getFcnombre() + " " + venta.getUsuario().getFcapepat() + " "
+				+ venta.getUsuario().getFcapemat());
+		contentTicket = contentTicket.replace("{{dateTime}}", formato.format(venta.getFdfechaventa()));
+		
+		String itmes = "";
+		for (DetalleVenta detVe : venta.getDetalleVenta())
+		{
+			String nombre = detVe.getProducto().getFcnomproducto();
+			String nombreF = "";
+			for (int i = 0; i < nombre.length(); i += Constantes.Ticket56)
+			{
+				if (i + Constantes.Ticket56 < nombre.length())
+				{
+					nombreF = nombreF + nombre.substring(i, i + Constantes.Ticket56) + "\n";
+				} else
+				{
+					nombreF = nombreF + agregarEspacion(nombre.substring(i), Constantes.Ticket56, false);
+				}
+			}
+			itmes = itmes
+					+ (detVe.getFicantidad() % 1.0D == 0.0D ? (int) detVe.getFicantidad() : new StringBuilder(String.valueOf(detVe.getFicantidad()))
+							.toString()) + " " + nombreF + "  $"
+					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa())).toString(), 5, true) + "  $"
+					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal())).toString(), 5, true) + "\n";
+			
+					//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa() / Constantes.IVA)).toString(), 5, true) + "  $"
+					//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal() / Constantes.IVA)).toString(), 5, true) + "\n";
+		}
+		contentTicket = contentTicket.replace("{{items}}", itmes);
+		contentTicket = contentTicket.replace("{{subtotal}}", formatoDecimal.format(venta.getFdtotal() / Constantes.IVA));
+		contentTicket = contentTicket.replace("{{iva}}", formatoDecimal.format(venta.getFdtotal() - (venta.getFdtotal() / Constantes.IVA)));
+		contentTicket = contentTicket.replace("{{total}}", formatoDecimal.format(venta.getFdtotal()));
+		contentTicket = contentTicket.replace("{{caja}}", venta.getCaja().getFcdesccaja());
+		if (venta.getCliente().getFiidcliente() > Constantes.IDDEDAULT.longValue())
+		{
+			contentTicket = contentTicket.replace("{{Cliente}}", venta.getCliente().getFcnombre() + " " + venta.getCliente().getFcapepat() + " "
+					+ venta.getCliente().getFcapemat() + "\n");
+		} else
+		{
+			contentTicket = contentTicket.replace("{{Cliente}}", "");
+		}
+		System.out.println(contentTicket);
+		print(contentTicket);
+	}
+	
+	public static void impresionTicketIVA(Venta venta) throws FileNotFoundException, PrintException
+	{
+		formatoDecimal.applyPattern("0.00");
+		String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
+				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
+				+ "=============================\n{{items}}\n"
 				+ "=============================\nSUBTOTAL: {{subtotal}}\n"
 				+ "\nIVA: {{iva}}\n"
 				+ "\nTOTAL: {{total}}\n\n"
@@ -96,6 +157,9 @@ public class Impresion
 			itmes = itmes
 					+ (detVe.getFicantidad() % 1.0D == 0.0D ? (int) detVe.getFicantidad() : new StringBuilder(String.valueOf(detVe.getFicantidad()))
 							.toString()) + " " + nombreF + "  $"
+					//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa())).toString(), 5, true) + "  $"
+					//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal())).toString(), 5, true) + "\n"
+			
 					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa() / Constantes.IVA)).toString(), 5, true) + "  $"
 					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal() / Constantes.IVA)).toString(), 5, true) + "\n";
 		}
@@ -130,8 +194,8 @@ public class Impresion
 		String	contentTicket	= "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
 				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "=============================\n{{items}}\n"
-				+ "=============================\nSUBTOTAL: {{subtotal}}\n"
-				+ "\nIVA: {{iva}}\n"
+				//+ "=============================\nSUBTOTAL: {{subtotal}}\n"
+				//+ "\nIVA: {{iva}}\n"
 				+ "\nTOTAL: {{total}}\n\n"
 				+ "{{ventaanterior}}RECIBIDO: {{recibo}}\n{{lnlcambio}}: {{change}}\n\n{{Cliente}}"
 				+ "=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
@@ -158,8 +222,11 @@ public class Impresion
 			itmes = itmes
 					+ (detVe.getFicantidad() % 1.0D == 0.0D ? (int) detVe.getFicantidad() : new StringBuilder(String.valueOf(detVe.getFicantidad()))
 							.toString()) + " " + nombreF + "  $"
-					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa() / Constantes.IVA)).toString(), 5, true) + " $"
-					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal()  / Constantes.IVA)).toString(), 5, true) + "\n";
+					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa())).toString(), 5, true) + " $"
+					+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal())).toString(), 5, true) + "\n";
+			
+				//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdprecioventa() / Constantes.IVA)).toString(), 5, true) + " $"
+				//+ agregarEspacion(new StringBuilder(formatoDecimal.format(detVe.getFdsubtotal()  / Constantes.IVA)).toString(), 5, true) + "\n";
 		}
 		contentTicket = contentTicket.replace("{{items}}", itmes);
 		contentTicket = contentTicket.replace("{{subtotal}}", formatoDecimal.format(venta.getFdtotal() / Constantes.IVA));
@@ -205,8 +272,8 @@ public class Impresion
 		for (PrintService s : services)
 		{
 			String impresora = s.toString();
-			if (impresora.indexOf("RP58") != -1)
-			//if (impresora.indexOf("BIXOLON") != -1)
+			//if (impresora.indexOf("RP58") != -1)
+			if (impresora.indexOf("BIXOLON") != -1)
 			{
 				System.out.println(s);
 				service = s;

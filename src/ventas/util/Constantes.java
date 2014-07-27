@@ -56,6 +56,8 @@ public class Constantes
   public static final Long IDDEDAULT = Long.valueOf(1L);
   
 //Ticket
-	final static public int Ticket56 = 16;
-	final static public int Ticket80 = 19;
+  	final static public int Ticket56 = 19;
+	//final static public int Ticket56 = 16; //56mm
+	
+	//final static public int Ticket80 = 19; //80mm
 }

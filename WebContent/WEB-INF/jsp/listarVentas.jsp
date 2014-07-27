@@ -167,6 +167,34 @@
 			}
 		});
 	}
+	
+	function doAjaxImprimirIVA(codigo) {
+
+		$
+				.blockUI( {
+					message : '<h2><img width="30px" height="30px" src="${pageContext.request.contextPath}/css/img/cargando.gif"> &nbsp;&nbsp;Imprimiendo ticket con IVA... </h2>',
+					css : {
+						border : 'none',
+						backgroundColor : '#000',
+						'-webkit-border-radius' : '10px',
+						'-moz-border-radius' : '10px',
+						opacity : .5,
+						color : '#fff'
+					}
+				});
+		setTimeout($.unblockUI, 2000);
+
+		$.ajax( {
+			type : "POST",
+			url : "${pageContext.request.contextPath}/imprimirticketIVA.htm",
+			data : "codigo=" + codigo,
+			success : function(response) {
+				if (response.status == "SUCCESS") {
+
+				}
+			}
+		});
+	}
 
 	function buscarVentas() {
 		var url = "${pageContext.request.contextPath}/listarVentas.htm?fechai="
@@ -188,7 +216,7 @@
 			<div class="accion">Lista de Ventas</div>
 
 
-			<div class="buscarCatalogo" style="float: center; font-size: .8em">
+			<div style="float: center; font-size: .8em">
 				<label> Total </label> <label id="totalVentas" style="color: blue; background-color: white; padding-left: 1em; padding-right: 1em"></label> <label> No. Venta </label> <input name="noventa" id="noventa" type="number" class="cantidad" size="5" value="${noventa}" min="0" /> <label> Fecha
 					Inicio </label> <input name="fechai" id="fechai" class="fecha" size="10" value="${fechai}" /> <label> Fecha Fin </label> <input name="fechaf" id="fechaf" class="fecha" size="10" value="${fechaf}" /> <a href="#" onclick=buscarVentas(); style="margin: 0em; padding: 0em;"><img
 					src="${pageContext.request.contextPath}/css/img/buscarGrafica.png" width="30px" height="30px" style="margin-top: 2em; margin-bottom: -10px; padding: 0em; margin-right: 0px" /> </a> <a href="#" onclick=exportarExcel(); style="margin: 0em; padding: 0em;"><img
@@ -207,6 +235,7 @@
 							<th>Total</th>
 							<th>Cancelada</th>
 							<th>Imprimir Ticket</th>
+							<th>Ticket IVA</th>
 							<th>Factura</th>
 							<th>Detalles</th>
 
@@ -234,6 +263,10 @@
 
 								<td><c:if test="${venta.fcactivo == '1'}">
 										<a href="#" onclick="doAjaxImprimir('${venta.fiidventa}')"><img src="${pageContext.request.contextPath}/css/img/ticket3.png" width="20px" height="20px" /> </a>
+									</c:if></td>
+									
+								<td><c:if test="${venta.fcactivo == '1'}">
+										<a href="#" onclick="doAjaxImprimirIVA('${venta.fiidventa}')"><img src="${pageContext.request.contextPath}/css/img/ticket3.png" width="20px" height="20px" /> </a>
 									</c:if></td>
 
 								<td><c:if test="${venta.fcactivo == '1'}">

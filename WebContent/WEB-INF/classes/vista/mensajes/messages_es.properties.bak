@@ -1,0 +1,9 @@
+titulo.giro=Ferreteria
+titulo.nombresistema=Ferreteria Herco
+titulo.empresa=Herco
+error.fcusuario.incorrecto=Usuario Incorrecto
+error.fcpassword.incorrecto=Contrase\u00F1a incorrecta
+error.fiidrol.noexiste=No existe un rol asociado a este usuario
+error.fiidrol.seleccionar=Selecciona un rol
+error.fiidproducto.noexiste=No existe el producto
+error.fiidproducto.bloqueado=Producto Bloqueado
