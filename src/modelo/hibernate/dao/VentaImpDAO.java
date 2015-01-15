@@ -96,4 +96,14 @@ public class VentaImpDAO extends GenericImpDAO<Venta, Long> implements VentaDAO
 		
 		return listaVentas;
 	}
+
+	@Override
+	public List<Venta> obtenerVentaCodigo(String codigo) {
+		List<Venta> ventas = null;
+
+		String hql = "select v from Venta v join v.detalleVenta dv where dv.producto.fiidproducto = '" + codigo + "' order by v.fdfechaventa";
+	    ventas = obtenerPorConsulta(hql);
+	    
+	    return ventas;
+	}
 }

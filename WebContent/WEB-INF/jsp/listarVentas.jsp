@@ -198,7 +198,7 @@
 
 	function buscarVentas() {
 		var url = "${pageContext.request.contextPath}/listarVentas.htm?fechai="
-				+ $("#fechai").val() + "&fechaf=" + $("#fechaf").val()
+				+ $("#fechai").val() + "&fechaf=" + $("#fechaf").val() + "&codigo=" + $("#idCodigo").val()
 				+ "&noventa=";
 		editar($("#noventa").val(), url);
 	}
@@ -218,7 +218,7 @@
 
 			<div style="float: center; font-size: .8em">
 				<label> Total </label> <label id="totalVentas" style="color: blue; background-color: white; padding-left: 1em; padding-right: 1em"></label> <label> No. Venta </label> <input name="noventa" id="noventa" type="number" class="cantidad" size="5" value="${noventa}" min="0" /> <label> Fecha
-					Inicio </label> <input name="fechai" id="fechai" class="fecha" size="10" value="${fechai}" /> <label> Fecha Fin </label> <input name="fechaf" id="fechaf" class="fecha" size="10" value="${fechaf}" /> <a href="#" onclick=buscarVentas(); style="margin: 0em; padding: 0em;"><img
+					Inicio </label> <input name="fechai" id="fechai" class="fecha" size="10" value="${fechai}" /> <label> Fecha Fin </label> <input name="fechaf" id="fechaf" class="fecha" size="10" value="${fechaf}" /> <label>Codigo</label><input name="idCodigo" id="idCodigo" value="${idCodigo}" size="20" /> <a href="#" onclick=buscarVentas(); style="margin: 0em; padding: 0em;"><img
 					src="${pageContext.request.contextPath}/css/img/buscarGrafica.png" width="30px" height="30px" style="margin-top: 2em; margin-bottom: -10px; padding: 0em; margin-right: 0px" /> </a> <a href="#" onclick=exportarExcel(); style="margin: 0em; padding: 0em;"><img
 					src="${pageContext.request.contextPath}/css/img/tabla.png" width="30px" height="30px" style="margin-top: 2em; margin-bottom: -10px; padding: 0em; margin-left: 10px" /> </a>
 

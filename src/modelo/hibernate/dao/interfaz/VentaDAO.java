@@ -17,4 +17,6 @@ public abstract interface VentaDAO
   public abstract List<Venta>	obtenerVentaDiaria(int mes, int ano);
   
   public abstract List<Venta>	obtenerVentaMensual(int ano);
+  
+  public abstract List<Venta> obtenerVentaCodigo(String codigo);
 }

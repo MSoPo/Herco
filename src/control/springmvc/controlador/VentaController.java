@@ -181,14 +181,20 @@ public class VentaController
         ventaform.setCambio(ventaform.getVenta().getFdtotal() - ventaform.getPago().getFdcantidad());
         observacion = "Venta a Pagos";
       }
+      System.out.println("-*-*-*-*-*- Inicia proceso de venta");
+      for (DetalleVenta lst : listaDetalle)
+      {
+    	System.out.println("-*-*-*-*-*- Producto " + lst.getProducto().getFiidproducto());
+    	System.out.println("-*-*-*-*-*-*- Producto Antes actualizar " + lst.getProducto().getFicantidad());  
+        lst.getProducto().setFicantidad(lst.getProducto().getFicantidad() - lst.getFicantidad());
+        this.productodao.actualiza(lst.getProducto());
+        System.out.println("-*-*-*-*-*-*- Producto actualizado " + lst.getProducto().getFicantidad());  
+      }
+      
       ventaform.getVenta().setFiidventa(((Long)this.dao.guarda(delegate.nuevaVenta(ventaform.getVenta(), listaDetalle, usuario, cliente, caja, observacion))).longValue());
       request.getSession().setAttribute("lstCliente", this.clientedao.obtenerPorCompoString("fcactivo", "1", "1", "fcnombre", true));
       ventaform.getVenta().setFiidventaanterior(0L);
-      for (DetalleVenta lst : listaDetalle)
-      {
-        lst.getProducto().setFicantidad(lst.getProducto().getFicantidad() - lst.getFicantidad());
-        this.productodao.actualiza(lst.getProducto());
-      }
+      System.out.println("-*-*-*-*-*- Venta guardada idVenta = " + ventaform.getVenta().getFiidventa());
       if ((ventaform.getAccion() == 6) || (ventaform.getAccion() == 7))
       {
     	  /*SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");

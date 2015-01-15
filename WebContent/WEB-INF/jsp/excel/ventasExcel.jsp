@@ -50,8 +50,8 @@
 				<td>Clave Producto</td>
 				<td>NombreProducto</td>
 				<td>Cantidad</td>
-				<td>Precio Iva</td>
-				<td>Subtutal Iva</td>
+				<td>Precio sin Iva</td>
+				<td>Subtutal sin Iva</td>
 				<td>Precio Venta</td>
 				<td>Subtotal</td>
 			</tr>

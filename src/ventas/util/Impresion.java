@@ -4,7 +4,10 @@ import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -55,7 +58,8 @@ public class Impresion
 	public static void impresionTicket(Venta venta) throws FileNotFoundException, PrintException
 	{
 		formatoDecimal.applyPattern("0.00");
-		String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
+		
+		/*String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
 				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "=============================\n{{items}}\n"
 				//+ "=============================\nSUBTOTAL: {{subtotal}}\n"
@@ -69,6 +73,33 @@ public class Impresion
 				+ "========================================\nTOTAL: $ {{total}}\n\n{{Cliente}}"
 				+ "========================================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";*/
 		
+		
+		String contentTicket = "";
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try{
+			archivo = new File(Constantes.archivoTicket);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			
+			String linea;
+			while((linea=br.readLine()) != null){
+				contentTicket += linea;
+				contentTicket += "\n";
+			}
+				
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if( null != fr )
+					fr.close();
+			}catch(Exception e2){
+				e2.printStackTrace();
+			}
+		}
 		
 		contentTicket = contentTicket.replace("{{ticket}}", venta.getFiidventa() + "");
 		contentTicket = contentTicket.replace("{{cajero}}", venta.getUsuario().getFcnombre() + " " + venta.getUsuario().getFcapepat() + " "
@@ -119,19 +150,45 @@ public class Impresion
 	public static void impresionTicketIVA(Venta venta) throws FileNotFoundException, PrintException
 	{
 		formatoDecimal.applyPattern("0.00");
-		String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
+		/*String contentTicket = "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
 				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "=============================\n{{items}}\n"
 				+ "=============================\nSUBTOTAL: {{subtotal}}\n"
 				+ "\nIVA: {{iva}}\n"
 				+ "\nTOTAL: {{total}}\n\n"
 				+ "{{Cliente}}=============================\n"
-				+ "GRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+				+ "GRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\nNO SE ACEPTAN DEVOLUCIONES\n\n\n\n\n\n";
 		/*String contentTicket = "Ferreteria San Juan\nEXPEDIDO EN: Cuautempan, Pue.\nDOMICILIO CONOCIDO CUAUTEMPAN.\nTEL. 797 59 6 33 15\n"
 				+ "========================================\nRFC: COCH8205082J5\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "========================================\n{{items}}\n"
 				+ "========================================\nTOTAL: $ {{total}}\n\n{{Cliente}}"
 				+ "========================================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";*/
+		
+		String contentTicket = "";
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try{
+			archivo = new File(Constantes.archivoTicketIva);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			
+			String linea;
+			while((linea=br.readLine()) != null){
+				contentTicket += linea;
+				contentTicket += "\n";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if( null != fr )
+					fr.close();
+			}catch(Exception e2){
+				e2.printStackTrace();
+			}
+		}
 		
 		
 		contentTicket = contentTicket.replace("{{ticket}}", venta.getFiidventa() + "");
@@ -191,7 +248,7 @@ public class Impresion
 				+ "========================================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";*/
 
 		
-		String	contentTicket	= "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
+		/*String	contentTicket	= "Ferreteria Herco\nEXPEDIDO EN: Ahucatlan, Pue.\nDOMICILIO CONOCIDO AHUACATLAN.\nTEL. 764 76 3 32 53\n"
 				+ "=============================\nRFC: HEPI8002008N99\n{{caja}} - Ticket # {{ticket}}\nLE ATENDIO: {{cajero}}\n{{dateTime}}\n"
 				+ "=============================\n{{items}}\n"
 				//+ "=============================\nSUBTOTAL: {{subtotal}}\n"
@@ -199,6 +256,32 @@ public class Impresion
 				+ "\nTOTAL: {{total}}\n\n"
 				+ "{{ventaanterior}}RECIBIDO: {{recibo}}\n{{lnlcambio}}: {{change}}\n\n{{Cliente}}"
 				+ "=============================\nGRACIAS POR SU COMPRA...\nESPERAMOS SU VISITA NUEVAMENTE\n\n\n\n\n\n\n\n";
+		*/
+		String contentTicket = "";
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try{
+			archivo = new File(Constantes.archivoTicket);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			
+			String linea;
+			while((linea=br.readLine()) != null){
+				contentTicket += linea;
+				contentTicket += "\n";
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try{
+				if( null != fr )
+					fr.close();
+			}catch(Exception e2){
+				e2.printStackTrace();
+			}
+		}
 		
 		contentTicket = contentTicket.replace("{{ticket}}", venta.getFiidventa() + "");
 		contentTicket = contentTicket.replace("{{cajero}}", venta.getUsuario().getFcnombre() + " " + venta.getUsuario().getFcapepat() + " "
@@ -277,6 +360,7 @@ public class Impresion
 			{
 				System.out.println(s);
 				service = s;
+				break;
 			}
 		}
 		

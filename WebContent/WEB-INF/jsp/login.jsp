@@ -42,14 +42,14 @@
 	<section class="login">
 		<article class="empresa">
 
-			<!-- 
-				<h1>
+			 <!--
+			<h1>
 				<fmt:message key="titulo.giro" />
 				"
 				<fmt:message key="titulo.empresa" />
 				" 
 				</h1>
-				-->
+					-->
 			<img alt="logo" src="${pageContext.request.contextPath}/css/img/logoHerco.png">
 
 		</article>

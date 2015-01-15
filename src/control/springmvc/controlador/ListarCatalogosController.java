@@ -318,6 +318,7 @@ public class ListarCatalogosController
     String fechainicio = request.getParameter("fechai");
     String fechafin = request.getParameter("fechaf");
     String noventa = request.getParameter("noventa");
+    String codigo = request.getParameter("codigo");
     Calendar cal = Calendar.getInstance();
     Date fechaf = cal.getTime();
     cal.add(5, -1);
@@ -337,6 +338,7 @@ public class ListarCatalogosController
     request.setAttribute("fechaf", format.format(fechaf));
     request.setAttribute("fechai", format.format(fechai));
     request.setAttribute("noventa", Long.valueOf(nventa));
+    request.setAttribute("idCodigo", codigo);
     
     List<Venta> lstVenta = null;
     if (nventa > 0L)
@@ -346,6 +348,9 @@ public class ListarCatalogosController
       if (venta != null) {
         lstVenta.add(venta);
       }
+    }
+    else if(codigo != null && codigo.trim() != ""){
+    	lstVenta = this.ventadao.obtenerVentaCodigo(codigo);
     }
     else
     {

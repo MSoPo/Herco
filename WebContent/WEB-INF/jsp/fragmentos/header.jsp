@@ -4,11 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <header>
 	<div class="empresa" style="font-size: 1.5em">
-		<!-- Sin Logo 
+		 <!-- Sin Logo
 		 <div class="giro">
 			<fmt:message key="titulo.giro" />
 		</div>
 		<fmt:message key="titulo.empresa" /> -->
+		
 		<img alt="logo" src="${pageContext.request.contextPath}/css/img/logoHerco.png">
 	</div>
 	<div style="height: 46%;"></div>

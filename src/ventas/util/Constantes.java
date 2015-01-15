@@ -60,4 +60,13 @@ public class Constantes
 	//final static public int Ticket56 = 16; //56mm
 	
 	//final static public int Ticket80 = 19; //80mm
+  	
+  //Desarrollo
+  	//final static public String archivoTicket = "/Users/miguesopo/Desktop/ticket.txt";
+  	//final static public String archivoTicketIva = "/Users/miguesopo/Desktop/ticketIva.txt";
+  	
+  //Produccion
+  	final static public String archivoTicket = "C:/sistemaherco/ticket.txt";
+  	final static public String archivoTicketIva = "C:/sistemaherco/ticketIva.txt";
+  	
 }

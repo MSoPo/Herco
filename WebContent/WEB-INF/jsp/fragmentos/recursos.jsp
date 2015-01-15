@@ -6,5 +6,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/venta.js"></script>
-<title>Ferreteria Herco</title>
+<title>Ferreteria San Juan</title>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" />

@@ -334,6 +334,7 @@
 						<table>
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>Codigo</th>
 									<th>Producto</th>
 									<th>Cantidad</th>
@@ -345,6 +346,7 @@
 							<tbody>
 								<c:forEach var="lstproducto" items="${detalleVenta}" varStatus="status">
 									<tr <c:if test="${status.index%2 != 0}"> class="alt" </c:if>>
+										<td>${status.index + 1}</td>
 										<td>${lstproducto.producto.fiidproducto}</td>
 										<td>${lstproducto.producto.fcnomproducto}</td>
 										<td><input value="${lstproducto.ficantidad}" id="cantidadVenta" type="number" min="1" max="${lstproducto.producto.ficantidad}" <c:if test="${lstproducto.producto.medida.fcvaloresenteros == '1'}" >
